@@ -5,11 +5,17 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App";
 import Start from "./Start";
 import Login from "./Login";
+import AdminProfileEdit from "./AdminProfileEdit";
+import Header from "./Header";
+import ProfileEdit from "./ProfileEdit";
+import ProfileView from "./ProfileView";
+import AdminProfileView from "./AdminProfileView";
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Login />
+    <ProfileView />
   </React.StrictMode>
 );
 
