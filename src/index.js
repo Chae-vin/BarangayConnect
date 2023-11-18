@@ -14,12 +14,13 @@ import Signup from "./Signup";
 import CommunityCalendar from "./CommunityCalendar";
 import ProfileList from "./ProfileList";
 import AdminCalendar from "./AdminCalendar";
+import EventList from "./EventList";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AdminCalendar />
+    <EventList />
   </React.StrictMode>
 );
 
