@@ -3,24 +3,24 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import App from "./App";
-import Start from "./Start";
-import Login from "./Login";
-import AdminProfileEdit from "./AdminProfileEdit";
+import Start from "./Login/Start";
+import Login from "./Login/Login";
+import AdminProfileEdit from "./Profile/AdminProfileEdit";
 import Header from "./Header";
-import ProfileEdit from "./ProfileEdit";
-import ProfileView from "./ProfileView";
-import AdminProfileView from "./AdminProfileView";
-import Signup from "./Signup";
-import CommunityCalendar from "./CommunityCalendar";
-import ProfileList from "./ProfileList";
-import AdminCalendar from "./AdminCalendar";
-import EventList from "./EventList";
+import ProfileEdit from "./Profile/ProfileEdit";
+import ProfileView from "./Profile/ProfileView";
+import AdminProfileView from "./Profile/AdminProfileView";
+import Signup from "./Login/Signup";
+import CommunityCalendar from "./Calendar/CommunityCalendar";
+import ProfileList from "./Profile/ProfileList";
+import AdminCalendar from "./Calendar/AdminCalendar";
+import EventList from "./Calendar/EventList";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <EventList />
+    <Start />
   </React.StrictMode>
 );
 

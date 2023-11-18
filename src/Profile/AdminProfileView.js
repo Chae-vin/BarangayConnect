@@ -1,9 +1,9 @@
 import React, { useState, useRef } from "react";
 import { Button, Grid } from "@mui/material";
-import Header from "./Header";
+import Header from "../Header";
 import "./Profile.css";
 
-export default function ProfileView() {
+export default function AdminProfileView () {
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
@@ -47,14 +47,15 @@ export default function ProfileView() {
     "Filipino",
     "Roman Catholic",
   ];
-
   return (
     <div className="profile-screen">
       <div>
         <Header />
       </div>
       <Grid container style={{ flex: 1 }}>
-        <div className="profilePicture-area">
+        <div
+          className="profilePicture-area"
+        >
           <div>
             <img
               ref={uploadedImage}
@@ -62,7 +63,11 @@ export default function ProfileView() {
               src={uploadedImage.current?.src || placeholderImage}
               alt="Profile"
             />
-            <div className="center-style">
+            <div
+              style={{
+                textAlign: "center",
+              }}
+            >
               <p
                 style={{
                   color: "#FFFFFF",
@@ -75,7 +80,9 @@ export default function ProfileView() {
             </div>
           </div>
         </div>
-        <div className="details-area">
+        <div
+          className="details-area"
+        >
           <div className="center-style">
             <h1
               style={{

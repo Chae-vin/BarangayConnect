@@ -1,19 +1,25 @@
 import React, { useState, useRef } from "react";
 import { Button, Grid } from "@mui/material";
-import Header from "./Header";
+import Header from "../Header";
 import "./Profile.css";
 
-export default function ProfileEdit() {
+export default function ProfileView() {
   const uploadedImage = useRef(null);
   const imageUploader = useRef(null);
 
-  const placeholderImage = "profile.png";
-  const editableFields = [
-    "Mobile Number",
-    "Marital Status",
-    "Citizenship",
-    "Religion",
-  ];
+  const handleImageUpload = (e) => {
+    const [file] = e.target.files;
+    if (file) {
+      const reader = new FileReader();
+      const { current } = uploadedImage;
+      current.file = file;
+      reader.onload = (e) => {
+        current.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const placeholderImage = "profile.png"; // Replace with your placeholder image URL or local path
   const details = [
     "Username",
     "Email",
@@ -28,7 +34,7 @@ export default function ProfileEdit() {
     "Religion",
   ];
   // Sample values for each detail
-  const initialValues = [
+  const values = [
     "larsss01 ",
     "larajane@gmail.com",
     "Lara",
@@ -42,26 +48,6 @@ export default function ProfileEdit() {
     "Roman Catholic",
   ];
 
-  const [values, setValues] = useState(initialValues);
-
-  const handleInputChange = (index, newValue) => {
-    const newValues = [...values];
-    newValues[index] = newValue;
-    setValues(newValues);
-  };
-
-  const handleImageUpload = (e) => {
-    const [file] = e.target.files;
-    if (file) {
-      const reader = new FileReader();
-      const { current } = uploadedImage;
-      current.file = file;
-      reader.onload = (e) => {
-        current.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-  };
   return (
     <div className="profile-screen">
       <div>
@@ -86,29 +72,6 @@ export default function ProfileEdit() {
               >
                 Lara Jane
               </p>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageUpload}
-                ref={imageUploader}
-                style={{
-                  display: "none",
-                }}
-              />
-
-              <Button
-                variant="contained"
-                style={{
-                  color: "#FFFFFF",
-                  background: "#213555",
-                  borderRadius: "10px",
-                  width: "200px",
-                  fontWeight: "bold",
-                }}
-                onClick={() => imageUploader.current.click()}
-              >
-                Upload a Photo
-              </Button>
             </div>
           </div>
         </div>
@@ -144,36 +107,17 @@ export default function ProfileEdit() {
                     {label} :
                   </p>
                 </div>
-                <div
-                  style={{
-                    textAlign: "center",
-                    marginRight: "250px",
-                  }}
-                >
-                  {editableFields.includes(label) ? (
-                    <input
-                      type="text"
-                      style={{
-                        color: "#213555",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                        marginTop: "10px",
-                      }}
-                      value={values[index]}
-                      onChange={(e) => handleInputChange(index, e.target.value)}
-                    />
-                  ) : (
-                    <p
-                      style={{
-                        color: "#213555",
-                        fontWeight: "bold",
-                        fontSize: "18px",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      {values[index]}
-                    </p>
-                  )}
+                <div style={{ textAlign: "center", marginRight: "250px" }}>
+                  <p
+                    style={{
+                      color: "#213555",
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    {values[index]}
+                  </p>
                 </div>
               </div>
             ))}
@@ -191,7 +135,7 @@ export default function ProfileEdit() {
                 marginTop: "20px",
               }}
             >
-              Finish
+              Edit Profile
             </Button>
           </div>
         </div>
