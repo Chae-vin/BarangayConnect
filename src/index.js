@@ -13,12 +13,13 @@ import AdminProfileView from "./AdminProfileView";
 import Signup from "./Signup";
 import CommunityCalendar from "./CommunityCalendar";
 import ProfileList from "./ProfileList";
+import AdminCalendar from "./AdminCalendar";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AdminProfileEdit />
+    <AdminCalendar />
   </React.StrictMode>
 );
 
