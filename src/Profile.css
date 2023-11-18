@@ -28,4 +28,18 @@
   .center-style{
     text-align: center;
   }
-  
+  .delete-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #213555;
+    width: 300px;
+    text-align: center;
+  }
+  .delete-popup p{
+    font-size: 20px;
+  }

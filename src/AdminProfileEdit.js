@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, Modal } from "@mui/material";
 import Header from "./Header";
 
 export default function AdminProfileEdit() {
@@ -42,6 +42,24 @@ export default function AdminProfileEdit() {
   ];
 
   const [values, setValues] = useState(initialValues);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false);
+
+  const handleDeletePopup = () => {
+    setShowDeletePopup(true);
+  };
+  const handleCloseDeletePopup = () => {
+    setShowDeletePopup(false);
+  };
+  const handleDelete = () => {
+    setShowConfirmDeletePopup(true);
+  };
+
+  const handleCloseConfirmDeletePopup = () => {
+    // Close both modals
+    setShowDeletePopup(false);
+    setShowConfirmDeletePopup(false);
+  };
 
   const handleInputChange = (index, newValue) => {
     const newValues = [...values];
@@ -61,6 +79,7 @@ export default function AdminProfileEdit() {
       reader.readAsDataURL(file);
     }
   };
+
   return (
     <div className="profile-screen">
       <div>
@@ -204,9 +223,75 @@ export default function AdminProfileEdit() {
                 marginTop: "20px",
                 marginLeft: "20px",
               }}
+              onClick={handleDeletePopup}
             >
               Delete Profile
             </Button>
+            <Modal open={showDeletePopup} onClose={handleCloseDeletePopup}>
+              <div className="delete-popup">
+                <h2>Delete User Profile</h2>
+                <p>Are you sure you want to delete this Profile?</p>
+                <div>
+                  <Button
+                    variant="contained"
+                    onClick={handleDelete}
+                    style={{
+                      color: "#FFFFFF",
+                      background: "#F24E1E",
+                      borderRadius: "10px",
+                      width: "100px",
+                      fontWeight: "bold",
+                      marginTop: "20px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Delete
+                  </Button>
+
+                  <Button
+                    variant="contained"
+                    onClick={handleCloseDeletePopup}
+                    style={{
+                      color: "#FFFFFF",
+                      background: "#213555",
+                      borderRadius: "10px",
+                      width: "100px",
+                      fontWeight: "bold",
+                      marginTop: "20px",
+                      marginLeft: "10px",
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </Modal>
+            <Modal
+              open={showConfirmDeletePopup}
+              onClose={handleCloseConfirmDeletePopup}
+            >
+              <div className="delete-popup">
+                <h2>Successfully Deleted</h2>
+                <p>The user profile has been successfully deleted.</p>
+                <div>
+                  <Button
+                    variant="contained"
+                    onClick={handleCloseConfirmDeletePopup}
+                    style={{
+                      color: "#FFFFFF",
+                      background: "#213555",
+                      borderRadius: "10px",
+                      width: "100px",
+                      fontWeight: "bold",
+                      marginTop: "20px",
+                      marginRight: "10px",
+                    }}
+                  >
+                    Done
+                  </Button>
+                </div>
+              </div>
+            </Modal>
           </div>
         </div>
       </Grid>
