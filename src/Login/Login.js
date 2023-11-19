@@ -2,9 +2,50 @@ import React, { useState } from "react";
 import "./Login.css";
 import { Button } from "@mui/material";
 import Signup from "./Signup";
+import Home from "../Home";
+
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAccountCreated, setIsAccountCreated] = useState(false); // New state to track account creation status
   const [isSignupVisible, setIsSignupVisible] = useState(false);
+  const [isHomeVisible, setIsHomeVisible] = useState(false);
+
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    console.log("Submitting:", {
+      username,
+      password,
+    });
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/login-signup/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
+
+      if (response.ok) {
+        // Login successful
+        setIsHomeVisible(true);
+        console.log("Login successful");
+      } else {
+        // Handle login error
+        const data = await response.json();
+        console.error("Signup failed");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("Your account may not be verified or there is an error occurred during Login. Please try again later.");
+    }
+  };
 
   const handleSignupClick = () => {
     setIsSignupVisible(true);
@@ -14,6 +55,8 @@ export default function Login() {
     <div>
       {isSignupVisible ? (
         <Signup />
+      ) : isHomeVisible ? (
+        <Home />
       ) : (
         <div style={{ display: "flex", justifyContent: "flex-start" }}>
           <div
@@ -25,8 +68,11 @@ export default function Login() {
             }}
           >
             <div>
-              <img src={"headerlogo.png"} alt="Logo" className="top-left-icon" />
-              
+              <img
+                src={"headerlogo.png"}
+                alt="Logo"
+                className="top-left-icon"
+              />
             </div>
             <div style={{ marginTop: "18%" }}>
               <div style={{ textAlign: "center", color: "#FFFFFF" }}>
@@ -39,6 +85,7 @@ export default function Login() {
                   id="username"
                   name="username"
                   placeholder="Enter your username"
+                  onChange={(e) => setUsername(e.target.value)}
                   style={{
                     width: "550px",
                     height: "40px",
@@ -51,6 +98,7 @@ export default function Login() {
                   id="password"
                   name="password"
                   placeholder="Enter your password"
+                  onChange={(e) => setPassword(e.target.value)}
                   style={{
                     width: "550px",
                     height: "40px",
@@ -62,6 +110,7 @@ export default function Login() {
               <div style={{ textAlign: "center" }}>
                 <Button
                   variant="contained"
+                  onClick={handleLogin}
                   style={{
                     color: "#FFFFFF",
                     background: "#213555",
@@ -107,7 +156,6 @@ export default function Login() {
           </div>
         </div>
       )}
-      
     </div>
   );
 }

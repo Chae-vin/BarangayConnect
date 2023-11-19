@@ -8,17 +8,73 @@ import FormControl from "@mui/material/FormControl";
 import Login from "./Login";
 
 export default function Signup() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [address, setAddress] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [gender, setGender] = useState("");
   const [showPopup, setShowPopup] = useState(false);
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(false); // State to manage Login visibility
+  const [isAccountCreated, setIsAccountCreated] = useState(false);
 
-  const handleSignup = () => {
-    // Perform validation here
-    // For demonstration, we'll just show a popup with the input values
-    setShowPopup(true);
+  const handleSignup = async (event) => {
+    event.preventDefault();
+    console.log("Submitting:", {
+      username,
+      password,
+      email,
+      fname,
+      lname,
+      address,
+      dateOfBirth,
+      gender,
+    });
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/login-signup/addInfo",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            username,
+            password,
+            email,
+            fname,
+            lname,
+            address,
+            dateOfBirth,
+            gender,
+          }),
+        }
+      );
+
+      if (response.ok) {
+        // Signup successful, set isAccountCreated to true
+        setIsAccountCreated(true);
+        setShowPopup(true);
+        console.log("Signup successful");
+        
+      } else {
+        // Handle signup error
+        console.error("Signup failed");
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert("An error occurred during signup. Please try again later.");
+    }
   };
+
   const handleClosePopup = () => {
     setShowPopup(false);
-    setShowLogin(true); // Show the login component
+    if (isAccountCreated) {
+      setShowLogin(true);
+    }
   };
 
   return (
@@ -36,10 +92,7 @@ export default function Signup() {
               />
             </div>
             <div>
-              <Paper
-                elevation={3}
-                className="paper-style"
-              >
+              <Paper elevation={3} className="paper-style">
                 <div
                   style={{
                     padding: "20px",
@@ -54,13 +107,8 @@ export default function Signup() {
                       id="username"
                       name="username"
                       className="long-input"
-                    ></input>
-                    <h1 className="title">Email:</h1>
-                    <input
-                      type="text"
-                      id="email"
-                      name="email"
-                      className="long-input"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
                     ></input>
                     <h1 className="title">Password:</h1>
                     <input
@@ -68,6 +116,17 @@ export default function Signup() {
                       id="password"
                       name="password"
                       className="long-input"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    ></input>
+                    <h1 className="title">Email:</h1>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="long-input"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                     ></input>
                   </div>
                 </div>
@@ -89,6 +148,8 @@ export default function Signup() {
                       id="firstname"
                       name="firstname"
                       className="short-input"
+                      value={fname}
+                      onChange={(e) => setFname(e.target.value)}
                       style={{ marginRight: "20px" }}
                     ></input>
                     <input
@@ -96,6 +157,8 @@ export default function Signup() {
                       id="lastname"
                       name="lastname"
                       className="short-input"
+                      value={lname}
+                      onChange={(e) => setLname(e.target.value)}
                     ></input>
                   </div>
 
@@ -106,14 +169,18 @@ export default function Signup() {
                       id="address"
                       name="address"
                       className="long-input"
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     ></input>
                     <h1 className="title">Date of Birth:</h1>
                     <input
-                      type="text"
+                      type="date"
                       id="birthdate"
                       name="birthdate"
                       placeholder="MM/DD/YYYY"
                       className="long-input"
+                      value={dateOfBirth}
+                      onChange={(e) => setDateOfBirth(e.target.value)}
                     ></input>
                     <h1 className="title">Gender:</h1>
                     <div style={{ textAlign: "center", color: "#213555" }}>
@@ -122,14 +189,16 @@ export default function Signup() {
                           row
                           aria-labelledby="gender"
                           name="gender-radio"
+                          value={gender}
+                          onChange={(e) => setGender(e.target.value)}
                         >
                           <FormControlLabel
-                            value="male"
+                            value="Male"
                             control={<Radio sx={{ color: "#213555" }} />}
                             label="Male"
                           />
                           <FormControlLabel
-                            value="female"
+                            value="Female"
                             control={<Radio sx={{ color: "#213555" }} />}
                             label="Female"
                           />

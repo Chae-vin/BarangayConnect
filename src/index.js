@@ -15,12 +15,13 @@ import CommunityCalendar from "./Calendar/CommunityCalendar";
 import ProfileList from "./Profile/ProfileList";
 import AdminCalendar from "./Calendar/AdminCalendar";
 import EventList from "./Calendar/EventList";
+import Home from "./Home";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Start />
+    <Home />
   </React.StrictMode>
 );
 
