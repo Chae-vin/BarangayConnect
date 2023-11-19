@@ -22,7 +22,7 @@ export default function Login() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/login-signup/login",
+        "http://localhost:8080/login-signup/login",
         {
           method: "POST",
           headers: {

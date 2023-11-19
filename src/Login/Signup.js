@@ -35,7 +35,7 @@ export default function Signup() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/login-signup/addInfo",
+        "http://localhost:8080/login-signup/addInfo",
         {
           method: "POST",
           headers: {
